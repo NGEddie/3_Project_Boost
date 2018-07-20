@@ -238,7 +238,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1448283089773564, guid: b8def95387d3d8e4fa3e59c9eda0bf06, type: 2}
       propertyPath: m_Name
-      value: Launch Pad (2)
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 4857028159301192, guid: b8def95387d3d8e4fa3e59c9eda0bf06, type: 2}
       propertyPath: m_LocalScale.z
@@ -252,6 +252,11 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 7.454664
       objectReference: {fileID: 0}
+    - target: {fileID: 23988091025125108, guid: b8def95387d3d8e4fa3e59c9eda0bf06,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 55c9c62158ef28f4a86307a63ed5e4f5, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b8def95387d3d8e4fa3e59c9eda0bf06, type: 2}
   m_IsPrefabParent: 0
@@ -296,7 +301,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1448283089773564, guid: b8def95387d3d8e4fa3e59c9eda0bf06, type: 2}
       propertyPath: m_Name
-      value: Launch Pad (1)
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 4857028159301192, guid: b8def95387d3d8e4fa3e59c9eda0bf06, type: 2}
       propertyPath: m_LocalScale.z
@@ -310,6 +315,11 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 23988091025125108, guid: b8def95387d3d8e4fa3e59c9eda0bf06,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 55c9c62158ef28f4a86307a63ed5e4f5, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b8def95387d3d8e4fa3e59c9eda0bf06, type: 2}
   m_IsPrefabParent: 0
@@ -393,6 +403,21 @@ Prefab:
     - target: {fileID: 4175837165985864, guid: 0da16ec16299f9744817f5f8c5330eae, type: 2}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 54646480110384538, guid: 0da16ec16299f9744817f5f8c5330eae,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 114720953842212626, guid: 0da16ec16299f9744817f5f8c5330eae,
+        type: 2}
+      propertyPath: rcsThrust
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 114720953842212626, guid: 0da16ec16299f9744817f5f8c5330eae,
+        type: 2}
+      propertyPath: mainThrust
+      value: 15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0da16ec16299f9744817f5f8c5330eae, type: 2}
