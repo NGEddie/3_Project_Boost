@@ -16,13 +16,13 @@ public class DeathScript : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void StartDeath(Vector3 deathPosition)
+    public void StartDeath(Vector3 deathPosition, float levelDelay)
     {
         gameObject.transform.position = deathPosition;
         explosionParticles.Play();
         audioSource.PlayOneShot(explosionSound);
 
-        Invoke("LoadStartScene", 1f);
+        Invoke("LoadStartScene", levelDelay);
     }
 
     private void LoadStartScene()

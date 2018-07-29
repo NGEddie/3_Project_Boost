@@ -5,6 +5,7 @@ public class Rocket : MonoBehaviour
 {
     [SerializeField] float rcsThrust = 250f;
     [SerializeField] float mainThrust = 15f;
+    [SerializeField] float levelLoadDelay = 2f;
     [SerializeField] AudioClip mainEngine;
     [SerializeField] AudioClip levelingSound;
 
@@ -103,18 +104,25 @@ public class Rocket : MonoBehaviour
         rocketSound.Stop();
         rocketSound.PlayOneShot(levelingSound);
         levelingParticles.Play();
-        Invoke("LoadNextScene", 1f);
+        Invoke("LoadNextScene", levelLoadDelay);
     }
 
     private void StartDeathSequence()
     {
         state = State.Dying;
-        FindObjectOfType<DeathScript>().StartDeath(gameObject.transform.position);
+        FindObjectOfType<DeathScript>().StartDeath(gameObject.transform.position,levelLoadDelay);
         Destroy(gameObject);
      }
 
     private void LoadNextScene()
     {
-        SceneManager.LoadScene(1);
+        if (SceneManager.GetActiveScene().buildIndex + 1 >= SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }         
+        else
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 }
