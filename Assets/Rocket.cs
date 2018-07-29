@@ -12,8 +12,14 @@ public class Rocket : MonoBehaviour
     [SerializeField] ParticleSystem mainEngineParticles;
     [SerializeField] ParticleSystem levelingParticles;
 
+    
+
     Rigidbody rigidBody;
     AudioSource rocketSound;
+
+    int currentLevel;
+    int maxLevel;
+    bool isTesting = false;
 
     enum State { Alive, Dying, Levelling };
     State state = State.Alive;
@@ -24,19 +30,25 @@ public class Rocket : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         rocketSound = GetComponent<AudioSource>();
+        currentLevel = SceneManager.GetActiveScene().buildIndex;
+        maxLevel = SceneManager.sceneCountInBuildSettings -1;
         
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if(state == State.Alive)
+        RespondToDebugKeys();
+
+        if (state == State.Alive)
         {
             RespondToThrustInput();
             RespondToRotateInput();
         }
-	
-	}
+    }
+
+    
+
 
     private void RespondToThrustInput()
     {
@@ -79,12 +91,23 @@ public class Rocket : MonoBehaviour
         rigidBody.freezeRotation = false;
     }
 
+    private void RespondToDebugKeys()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            LoadNextScene();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ToggleCollisions();
+        }
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if(state != State.Alive)
-        {
-            return;
-        }
+        if(state != State.Alive || isTesting) {return;}
+
         switch (collision.gameObject.tag)
         {
             case "Friendly":
@@ -95,6 +118,20 @@ public class Rocket : MonoBehaviour
             default:
                 StartDeathSequence();
                 break;
+        }
+    }
+
+    private void ToggleCollisions()
+    {
+        if (isTesting)
+        {
+            isTesting = !isTesting;
+            print("Collisons On - Game Mode");
+        }
+        else
+        {
+            isTesting = !isTesting;
+            print("Collisions Off - Test Mode");
         }
     }
 
@@ -116,13 +153,13 @@ public class Rocket : MonoBehaviour
 
     private void LoadNextScene()
     {
-        if (SceneManager.GetActiveScene().buildIndex + 1 >= SceneManager.sceneCountInBuildSettings)
+        if (currentLevel >= maxLevel)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            SceneManager.LoadScene(0);
         }         
         else
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(currentLevel + 1);
         }
     }
 }
