@@ -1368,20 +1368,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 54646480110384538, guid: 0da16ec16299f9744817f5f8c5330eae,
+    - target: {fileID: 82252347441657062, guid: 0da16ec16299f9744817f5f8c5330eae,
         type: 2}
-      propertyPath: m_Constraints
-      value: 56
-      objectReference: {fileID: 0}
-    - target: {fileID: 114720953842212626, guid: 0da16ec16299f9744817f5f8c5330eae,
-        type: 2}
-      propertyPath: rcsThrust
-      value: 250
-      objectReference: {fileID: 0}
-    - target: {fileID: 114720953842212626, guid: 0da16ec16299f9744817f5f8c5330eae,
-        type: 2}
-      propertyPath: mainThrust
-      value: 25
+      propertyPath: m_audioClip
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0da16ec16299f9744817f5f8c5330eae, type: 2}

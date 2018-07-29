@@ -3,16 +3,18 @@ using UnityEngine.SceneManagement;
 
 public class Rocket : MonoBehaviour 
 {
+    [SerializeField] float rcsThrust = 250f;
+    [SerializeField] float mainThrust = 15f;
+    [SerializeField] AudioClip mainEngine;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip levelingSound;
 
     Rigidbody rigidBody;
     AudioSource rocketSound;
 
     enum State { Alive, Dying, Levelling };
-
     State state = State.Alive;
 
-    [SerializeField] float  rcsThrust = 250f;
-    [SerializeField] float mainThrust = 15f;
 
     // Use this for initialization
     void Start()
@@ -26,21 +28,17 @@ public class Rocket : MonoBehaviour
     {
         if(state == State.Alive)
         {
-            Thrust();
-            Rotate();
+            RespondToThrustInput();
+            RespondToRotateInput();
         }
 	
 	}
 
-    private void Thrust()
+    private void RespondToThrustInput()
     {
         if (Input.GetKey(KeyCode.Space))  //Can thrust whilst rotating
         {
-            rigidBody.AddRelativeForce(Vector3.up * mainThrust);
-            if (!rocketSound.isPlaying)
-            {
-                rocketSound.Play();
-            }
+            ApplyThrust();
         }
         else
         {
@@ -48,7 +46,16 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    private void Rotate()
+    private void ApplyThrust()
+    {
+        rigidBody.AddRelativeForce(Vector3.up * mainThrust);
+        if (!rocketSound.isPlaying)
+        {
+            rocketSound.PlayOneShot(mainEngine);
+        }
+    }
+
+    private void RespondToRotateInput()
     {
         float rotationThisFrame = rcsThrust * Time.deltaTime;
 
@@ -77,14 +84,28 @@ public class Rocket : MonoBehaviour
             case "Friendly":
                 break;
             case "Finish":
-                state = State.Levelling;
-                Invoke("LoadNextScene",1f);
+                StartSuccessSequence();
                 break;
             default:
-                state = State.Dying;
-                Invoke("LoadStartScene",1f);
+                StartDeathSequence();
                 break;
         }
+    }
+
+    private void StartSuccessSequence()
+    {
+        state = State.Levelling;
+        rocketSound.Stop();
+        rocketSound.PlayOneShot(levelingSound);
+        Invoke("LoadNextScene", 1f);
+    }
+
+    private void StartDeathSequence()
+    {
+        state = State.Dying;
+        rocketSound.Stop();
+        rocketSound.PlayOneShot(deathSound);
+        Invoke("LoadStartScene", 1f);
     }
 
     private void LoadStartScene()
