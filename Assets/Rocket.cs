@@ -6,11 +6,9 @@ public class Rocket : MonoBehaviour
     [SerializeField] float rcsThrust = 250f;
     [SerializeField] float mainThrust = 15f;
     [SerializeField] AudioClip mainEngine;
-    [SerializeField] AudioClip deathSound;
     [SerializeField] AudioClip levelingSound;
 
     [SerializeField] ParticleSystem mainEngineParticles;
-    [SerializeField] ParticleSystem deathParticles;
     [SerializeField] ParticleSystem levelingParticles;
 
     Rigidbody rigidBody;
@@ -25,6 +23,7 @@ public class Rocket : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody>();
         rocketSound = GetComponent<AudioSource>();
+        
     }
 	
 	// Update is called once per frame
@@ -110,16 +109,9 @@ public class Rocket : MonoBehaviour
     private void StartDeathSequence()
     {
         state = State.Dying;
-        rocketSound.Stop();
-        rocketSound.PlayOneShot(deathSound);
-        deathParticles.Play();
-        Invoke("LoadStartScene", 1f);
-    }
-
-    private void LoadStartScene()
-    {
-        SceneManager.LoadScene(0);
-    }
+        FindObjectOfType<DeathScript>().StartDeath(gameObject.transform.position);
+        Destroy(gameObject);
+     }
 
     private void LoadNextScene()
     {
